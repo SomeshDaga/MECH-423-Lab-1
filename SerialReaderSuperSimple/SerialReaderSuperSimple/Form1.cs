@@ -62,7 +62,13 @@ namespace SerialReaderSuperSimple
                 serGumstick.Read(data, 0, serGumstick.ReadBufferSize);
 
             // Store latest data
-            Array.Copy(data, bytesToRead - packetSize, latestData, 0, packetSize);
+            try
+            {
+                Array.Copy(data, bytesToRead - packetSize, latestData, 0, packetSize);
+            }catch(Exception exp)
+            {
+                return;
+            }
 
             // Look for new byte (255) and assign accelerations
             for(int index = 0; index < packetSize; index++)
